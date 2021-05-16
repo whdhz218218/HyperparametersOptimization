@@ -1,0 +1,21 @@
+#!/bin/bash
+#
+##SBATCH --nodes=20
+#SBATCH —N 2
+#SBATCH -n 2
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=20
+#SBATCH --time=1:00:00
+#SBATCH --mem=16GB
+#SBATCH --job-name=myMatlabTest
+#SBATCH --mail-type=END
+##SBATCH --mail-user=bob.smith@nyu.edu
+#SBATCH --output=slurm_%j.out
+
+module purge
+module load python3/intel/3.5.3
+cd /scratch/mmy272/test
+
+srun -N 1 -n 1 python3 hello1.py 0 &
+srun -N 1 -n 1 python3 hello2.py 1 &
+wait
